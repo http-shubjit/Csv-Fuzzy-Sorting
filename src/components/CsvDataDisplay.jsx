@@ -8,6 +8,7 @@ const CsvDataDisplay = () => {
   const [originalData, setOriginalData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [sortOrder, setSortOrder] = useState({ field: '', direction: 'asc' });
 
   useEffect(() => {
     const fetchDataAndSetData = async () => {
@@ -32,14 +33,31 @@ const CsvDataDisplay = () => {
     }
   }, [searchTerm, originalData]);
 
+  const handleSort = (field) => {
+    setSortOrder((prevSortOrder) => ({
+      field,
+      direction: prevSortOrder.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
   const displayData = (data) => {
     const sortedData = data
       .filter((item) => item.Symbol !== null)
-      .sort((a, b) => (a.Symbol || '').localeCompare(b.Symbol || ''));
+      .sort((a, b) => {
+        if (sortOrder.field === 'Symbol') {
+          return sortOrder.direction === 'asc' ? a.Symbol.localeCompare(b.Symbol) : b.Symbol.localeCompare(a.Symbol);
+        } else if (sortOrder.field === 'Validtill') {
+          const dateA = new Date(a.Validtill.replace(/-/g, '/')).getTime(); // Convert to valid date format
+          const dateB = new Date(b.Validtill.replace(/-/g, '/')).getTime(); // Convert to valid date format
+
+          return sortOrder.direction === 'asc' ? dateA - dateB : dateB - dateA;
+        } else {
+          return 0;
+        }
+      });
 
     return sortedData.map((item) => (
       <tr key={item.Symbol}>
-        {/* Wrap the Symbol in a Link component */}
         <td>
           <Link to={`/details/${item.Symbol}`}>{item.Symbol}</Link>
         </td>
@@ -69,6 +87,9 @@ const CsvDataDisplay = () => {
         <button onClick={performSearch} id="searchButton">
           Search
         </button>
+      </div>
+      <div className="sort-buttons">
+        <button onClick={() => handleSort('Symbol')}>Sort by Symbol</button>
       </div>
       <table id="csvTable">
         <thead>

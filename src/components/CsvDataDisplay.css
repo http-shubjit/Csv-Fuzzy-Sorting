@@ -1,44 +1,84 @@
-/* CsvDataDisplay.css */
 .csv-data-display-container {
   max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
 }
 
 .search-container {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+#searchInput {
+  padding: 10px;
+  margin-right: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+  border-color: #000;
+}
+
+#searchButton {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#searchButton:hover {
+  background-color: #333;
+}
+
+.sort-buttons {
+  margin-bottom: 10px;
+}
+
+.sort-buttons button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sort-buttons button:hover {
+  background-color: #333;
 }
 
 #csvTable {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 #csvTable th, #csvTable td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
 }
 
 #csvTable th {
-  background-color: #f2f2f2;
-}
-#searchInput {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 8px;
+  background-color: #333;
+  color: white;
 }
 
-/* Add styles for the search button */
-#searchButton {
-  padding: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #090909; /* Green background color */
-  color: white; /* White text color */
-  
-  border-radius: 4px;
+#csvTable a {
+  color: #007acc; 
+  text-decoration: none; 
+}
+
+#csvTable a:hover {
+  text-decoration: underline; 
 }
