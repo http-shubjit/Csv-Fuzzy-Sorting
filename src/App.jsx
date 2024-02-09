@@ -1,12 +1,17 @@
 import React from 'react';
-import CsvDataDisplay from './components/CsvDataDisplay';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CsvDataDisplay from '../src/components/CsvDataDisplay';
+import DetailsPage from '../src/components/DetailsPage';
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <CsvDataDisplay />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<CsvDataDisplay />} />
+        <Route path="/details/:symbol" element={<DetailsPage />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;

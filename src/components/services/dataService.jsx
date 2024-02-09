@@ -1,6 +1,6 @@
 import { parse } from 'papaparse';
 
-export const fetchData = async () => {
+const fetchData = async () => {
   try {
     const response = await fetch(
       'https://prototype.sbulltech.com/api/v2/instruments',
@@ -32,3 +32,4 @@ export const fetchData = async () => {
     throw new Error(`Error fetching data: ${error.message}`);
   }
 };
+export default fetchData;
