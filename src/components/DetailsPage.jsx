@@ -1,4 +1,3 @@
-// In DetailsPage.js
 
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
@@ -7,6 +6,7 @@ import './DetailsPage.css';
 
 const DetailsPage = () => {
   const { symbol } = useParams();
+  // console.log(symbol)
   const [details, setDetails] = useState(null);
   const [quotes, setQuotes] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');

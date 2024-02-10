@@ -15,7 +15,6 @@ const CsvDataDisplay = () => {
       const data = await fetchData();
       setOriginalData(data);
     };
-
     fetchDataAndSetData();
   }, []);
 
@@ -40,17 +39,42 @@ const CsvDataDisplay = () => {
     }));
   };
 
+  const performSearch = () => {
+    if (!searchTerm) {
+      alert('Please enter a search term.');
+    } else {
+      const matchingResults = searchResults.length > 0 ? searchResults : originalData;
+
+      console.log('Matching Results:', matchingResults);
+
+      const isDataFound = matchingResults.some((item) => {
+        // Convert all fields to lowercase for a case-insensitive search
+        const lowercasedFields = Object.values(item).map(value => {
+          // Check if the value is null before calling toString
+          return value !== null ? value.toString().toLowerCase() : '';
+        });
+        const lowercasedSearchTerm = searchTerm.toLowerCase();
+
+        // Check if any field contains the search term
+        return lowercasedFields.some(field => field.includes(lowercasedSearchTerm));
+      });
+
+      console.log('Is Data Found:', isDataFound);
+
+      if (!isDataFound) {
+        alert(`No data found for search term: ${searchTerm}`);
+      }
+    }
+  };
+
+
+
   const displayData = (data) => {
     const sortedData = data
       .filter((item) => item.Symbol !== null)
       .sort((a, b) => {
         if (sortOrder.field === 'Symbol') {
           return sortOrder.direction === 'asc' ? a.Symbol.localeCompare(b.Symbol) : b.Symbol.localeCompare(a.Symbol);
-        } else if (sortOrder.field === 'Validtill') {
-          const dateA = new Date(a.Validtill.replace(/-/g, '/')).getTime(); // Convert to valid date format
-          const dateB = new Date(b.Validtill.replace(/-/g, '/')).getTime(); // Convert to valid date format
-
-          return sortOrder.direction === 'asc' ? dateA - dateB : dateB - dateA;
         } else {
           return 0;
         }
@@ -66,12 +90,6 @@ const CsvDataDisplay = () => {
         <td>{item.Validtill}</td>
       </tr>
     ));
-  };
-
-  const performSearch = () => {
-    if (!searchTerm) {
-      alert('Harigoli Agyann....');
-    }
   };
 
   return (
